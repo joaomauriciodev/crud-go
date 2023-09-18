@@ -2,6 +2,7 @@ package controller
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -17,7 +18,8 @@ func CreateUser(c *gin.Context) {
 	var userRequest request.UserRequest
 
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
-		restErr := resterr.NewBadRequestError(fmt.Sprintf("There are some incorret fields, error=%s\n", err.Error()))
+		restErr := resterr.NewBadRequestError("There are some incorret fields")
+		log.Print(err.Error())
 		c.JSON(restErr.Code, restErr)
 		return
 	}
